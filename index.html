@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mobile Recharge</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J8CJT7PL1X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8CJT7PL1X');</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{width:100%;min-height:100%;overflow-x:hidden}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#e9defc 0%,#f4f2f7 55%,#eeecf2 100%);font-family:'Sora',-apple-system,sans-serif;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;padding:30px 16px 40px}
+  .card{width:100%;max-width:420px;min-height:100vh;min-height:100dvh;background:#fbfaff;border-radius:34px;position:relative;overflow:hidden;box-shadow:0 40px 80px -34px rgba(58,26,110,.45),0 0 0 1px rgba(109,40,217,.07);animation:slideFwd .26s cubic-bezier(.22,.7,.3,1) both}
+  .card > :first-child{padding-top:calc(24px + env(safe-area-inset-top)) !important}
+  .card > :last-child{padding-bottom:calc(26px + env(safe-area-inset-bottom)) !important}
+  button,input{font:inherit;touch-action:manipulation}
+  button{min-height:44px}
+  input{font-size:16px !important}
+  .hero{position:relative;padding:24px 24px 74px;background:radial-gradient(420px 260px at 88% -8%,#a855f7 0%,rgba(168,85,247,0) 62%),linear-gradient(158deg,#6d28d9 0%,#4c1d95 100%);border-radius:0 0 30px 30px;overflow:hidden}
+  .panel{position:relative;z-index:1;margin:-54px 18px 0;padding:20px 20px 24px;background:#fff;border-radius:24px;box-shadow:0 22px 44px -26px rgba(58,26,110,.4),0 0 0 1px rgba(109,40,217,.06)}
+  .btn-grad{background:linear-gradient(140deg,#7c3aed,#5b21b6);box-shadow:0 16px 28px -14px rgba(109,40,217,.9)}
+  a{color:#6d28d9;text-decoration:none}a:hover{color:#55208f}
+  @keyframes slideFwd{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
+  @media (max-width:640px){
+    body{padding:0;background:#fff}
+    .card{max-width:100%;border-radius:0;min-height:100vh;min-height:100dvh;box-shadow:none}
+    .hero{padding-top:calc(24px + env(safe-area-inset-top))}
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <!-- Hero -->
+    <div class="hero">
+      <div style="position:absolute;top:-70px;right:-70px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.07)"></div>
+      <div style="position:relative;display:flex;align-items:center;justify-content:space-between">
+        <span style="display:inline-flex;align-items:center;gap:10px">
+          <span style="display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:700;font-size:16px">₹</span>
+          <span style="color:#fff;font-weight:600;font-size:16px;letter-spacing:-.2px">Recharge</span>
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18)">
+          <span style="width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80"></span>
+          <span style="color:#fff;font-size:11px;font-weight:500;letter-spacing:.3px">Offers live</span>
+        </span>
+      </div>
+      <div style="position:relative;margin-top:30px">
+        <h1 style="margin:0;font-size:29px;line-height:1.15;font-weight:700;color:#fff;letter-spacing:-.8px">Mobile Recharge</h1>
+        <p style="margin:9px 0 0;max-width:280px;font-size:13px;line-height:1.6;color:rgba(255,255,255,.72)">Enter your mobile number to explore active plans and exclusive offers.</p>
+      </div>
+    </div>
+
+    <!-- Floating panel -->
+    <div class="panel">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:#f4f0fe;border-radius:14px">
+        <button id="tab-prepaid" onclick="setType('Prepaid')" style="border:none;border-radius:11px;padding:11px 0;font-family:inherit;font-weight:600;font-size:13.5px;cursor:pointer">Prepaid</button>
+        <button id="tab-postpaid" onclick="setType('Postpaid')" style="border:none;border-radius:11px;padding:11px 0;font-family:inherit;font-weight:600;font-size:13.5px;cursor:pointer">Postpaid</button>
+      </div>
+
+      <div style="margin-top:22px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:12px;font-weight:600;color:#1e1233">Select operator</span>
+        <span id="opLabel" style="font-size:11.5px;color:#8b83a3">JIO</span>
+      </div>
+      <div id="operators" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px"></div>
+
+      <div style="margin-top:22px;font-size:12px;font-weight:600;color:#1e1233">Your mobile number</div>
+      <div id="inputWrap" style="display:flex;align-items:center;gap:11px;margin-top:9px;padding:0 15px;height:54px;border-radius:16px;background:#fbfaff;border:1.5px solid #eeeaf6;transition:all .15s">
+        <span style="font-size:15px;font-weight:600;color:#6f6788">+91</span>
+        <span style="width:1px;height:22px;background:#e7e2f2"></span>
+        <input id="terminalIdentityInput" type="tel" inputmode="numeric" maxlength="10" placeholder="00000 00000" oninput="onNumberInput()" style="flex:1;min-width:0;border:none;outline:none;background:transparent;font-family:inherit;font-size:17px;font-weight:600;letter-spacing:.4px;color:#1e1233">
+        <span id="tick" style="display:none;place-items:center;width:22px;height:22px;border-radius:50%;background:#16a34a;color:#fff;font-size:12px;flex-shrink:0">✓</span>
+      </div>
+      <div id="validationAlertFrame" class="hidden" style="margin-top:9px;font-size:12px;font-weight:500;color:#dc2657">Enter a valid 10-digit mobile number</div>
+
+      <button id="submitTransactionBtn" onclick="processNodeValidation()" style="width:100%;display:flex;align-items:center;justify-content:center;gap:9px;margin-top:18px;border:none;border-radius:16px;padding:17px 0;font-family:inherit;font-weight:600;font-size:15px;color:#fff;background:#cdc5dd;cursor:not-allowed;transition:all .15s">
+        <span>Proceed to Recharge</span><span style="font-size:16px">→</span>
+      </button>
+    </div>
+
+    <!-- Reward -->
+    <div style="margin:16px 18px 0;padding:16px;border-radius:20px;background:linear-gradient(120deg,#fff 0%,#fdf4ff 100%);box-shadow:0 0 0 1px rgba(109,40,217,.08);display:flex;align-items:center;gap:14px">
+      <div style="flex:1">
+        <span style="display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.7px;color:#fff;background:linear-gradient(120deg,#e0417a,#c026d3);padding:4px 9px;border-radius:999px">ASSURED REWARD</span>
+        <div style="margin-top:9px;font-size:14.5px;font-weight:600;color:#1e1233;letter-spacing:-.2px">Get Extra 90% Discount On Plans</div>
+        <div style="margin-top:4px;font-size:12px;line-height:1.5;color:#7d7593">Valid on instant online payment processing.</div>
+      </div>
+      <div style="display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:#fff;box-shadow:0 8px 18px -10px rgba(109,40,217,.55);font-size:20px;flex-shrink:0">🎁</div>
+    </div>
+
+    <div style="padding:20px 24px calc(26px + env(safe-area-inset-bottom));display:flex;align-items:center;justify-content:center;gap:8px;font-size:11.5px;font-weight:500;color:#16a34a">
+      <span style="display:grid;place-items:center;width:15px;height:15px;border-radius:5px;background:#16a34a;color:#fff;font-size:9px">✓</span>
+      Secure 256-bit Encrypted Connection
+    </div>
+  </div>
+
+<script>
+var OPERATORS=[
+ {name:'Jio',mark:'Jio',bg:'#e21b22',fg:'#fff'},
+ {name:'Airtel',mark:'airtel',bg:'#fff',fg:'#e40000'},
+ {name:'Vi',mark:'Vi',bg:'#e60000',fg:'#fff'},
+ {name:'BSNL',mark:'BSNL',bg:'#fff',fg:'#1a6bb0'}
+];
+var selectedOperator = localStorage.getItem('recharge_operator') || 'Jio';
+var connType='Prepaid';
+var registeredNodeState = selectedOperator.toLowerCase();
+
+function renderOperators(){
+  document.getElementById('operators').innerHTML = OPERATORS.map(function(o){
+    var a=o.name===selectedOperator;
+    return '<button onclick="selectOperator(\''+o.name+'\')" style="display:flex;flex-direction:column;align-items:center;gap:7px;padding:11px 4px 9px;border-radius:16px;cursor:pointer;font-family:inherit;background:'+(a?'#f6f1fe':'#fbfaff')+';border:1.5px solid '+(a?'#7c3aed':'#eeeaf6')+';box-shadow:'+(a?'0 10px 20px -14px rgba(109,40,217,.8)':'none')+';transition:all .15s">'
+      +'<span style="display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:'+o.bg+';color:'+o.fg+';font-weight:700;font-size:'+(o.mark.length>3?10:13)+'px;box-shadow:0 0 0 1px rgba(0,0,0,.06)">'+o.mark+'</span>'
+      +'<span style="font-size:11px;font-weight:600;color:'+(a?'#6d28d9':'#6f6788')+'">'+o.name+'</span></button>';
+  }).join('');
+  document.getElementById('opLabel').textContent = selectedOperator.toUpperCase();
+}
+function selectOperator(n){ selectedOperator=n; registeredNodeState=n.toLowerCase(); renderOperators(); }
+
+/* Existing function names retained for compatibility with the original page. */
+function filterInputCharacters(element){ element.value=element.value.replace(/[^0-9]/g,''); var a=document.getElementById('validationAlertFrame'); if(a)a.classList.add('hidden'); }
+function syncUIVisualState(currentNodeKey){ registeredNodeState=currentNodeKey; selectedOperator=currentNodeKey.charAt(0).toUpperCase()+currentNodeKey.slice(1); renderOperators(); }
+
+function setType(t){
+  connType=t;
+  [['Prepaid','tab-prepaid'],['Postpaid','tab-postpaid']].forEach(function(p){
+    var b=document.getElementById(p[1]), a=(p[0]===t);
+    b.style.color = a?'#fff':'#6d28d9';
+    b.style.background = a?'linear-gradient(140deg,#7c3aed,#5b21b6)':'transparent';
+    b.style.boxShadow = a?'0 8px 16px -8px rgba(109,40,217,.8)':'none';
+  });
+}
+
+function onNumberInput(){
+  var el=document.getElementById('terminalIdentityInput');
+  filterInputCharacters(el);
+  var ok=el.value.length===10 && ['6','7','8','9'].indexOf(el.value.charAt(0))!==-1, btn=document.getElementById('submitTransactionBtn');
+  document.getElementById('tick').style.display = ok?'grid':'none';
+  btn.style.background = ok?'linear-gradient(140deg,#7c3aed,#5b21b6)':'#cdc5dd';
+  btn.style.boxShadow = ok?'0 16px 28px -14px rgba(109,40,217,.9)':'none';
+  btn.style.cursor = ok?'pointer':'not-allowed';
+  if(ok) document.getElementById('validationAlertFrame').classList.add('hidden');
+}
+document.getElementById('terminalIdentityInput').addEventListener('focus',function(){var w=document.getElementById('inputWrap');w.style.border='1.5px solid #7c3aed';w.style.boxShadow='0 0 0 4px rgba(124,58,237,.1)';});
+document.getElementById('terminalIdentityInput').addEventListener('blur',function(){var w=document.getElementById('inputWrap');w.style.border='1.5px solid #eeeaf6';w.style.boxShadow='none';});
+
+function processNodeValidation(){
+  var num=document.getElementById('terminalIdentityInput').value;
+  if(num.length!==10 || ['6','7','8','9'].indexOf(num.charAt(0))===-1){ document.getElementById('validationAlertFrame').classList.remove('hidden'); return; }
+  localStorage.setItem('recharge_mobile',num);
+  localStorage.setItem('recharge_operator',registeredNodeState);
+  localStorage.setItem('recharge_type',connType);
+  window.location.href='plans.html';
+}
+
+renderOperators(); setType('Prepaid');
+</script>
+</body>
+</html>

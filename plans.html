@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plans</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J8CJT7PL1X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-J8CJT7PL1X');</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box}
+  html,body{width:100%;min-height:100%;overflow-x:hidden}
+  body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#e9defc 0%,#f4f2f7 55%,#eeecf2 100%);font-family:'Sora',-apple-system,sans-serif;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;padding:30px 16px 40px}
+  .card{width:100%;max-width:420px;min-height:100vh;min-height:100dvh;background:#fbfaff;border-radius:34px;position:relative;overflow:hidden;box-shadow:0 40px 80px -34px rgba(58,26,110,.45),0 0 0 1px rgba(109,40,217,.07);animation:slideFwd .26s cubic-bezier(.22,.7,.3,1) both}
+  .card > :first-child{padding-top:calc(22px + env(safe-area-inset-top)) !important}
+  .card > :last-child{padding-bottom:calc(28px + env(safe-area-inset-bottom)) !important}
+  button{min-height:44px;font:inherit;touch-action:manipulation}
+  #tabs{min-width:0;max-width:100%;scrollbar-width:none;overscroll-behavior-x:contain}
+  #planList{min-width:0;max-width:100%;overflow-x:hidden}
+  .hero{position:relative;padding:22px 22px 20px;background:radial-gradient(360px 220px at 88% -20%,#a855f7 0%,rgba(168,85,247,0) 60%),linear-gradient(158deg,#6d28d9 0%,#4c1d95 100%);border-radius:0 0 26px 26px}
+  .btn-grad{background:linear-gradient(140deg,#7c3aed,#5b21b6);box-shadow:0 12px 22px -12px rgba(109,40,217,.8)}
+  a{color:#6d28d9;text-decoration:none}a:hover{color:#55208f}
+  #tabs::-webkit-scrollbar{display:none}
+  @keyframes slideFwd{from{opacity:0;transform:translateX(26px)}to{opacity:1;transform:translateX(0)}}
+  @media (max-width:640px){
+    body{padding:0;background:#fff}
+    .card{max-width:100%;border-radius:0;min-height:100vh;min-height:100dvh;box-shadow:none}
+    .hero{padding-top:calc(22px + env(safe-area-inset-top))}
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="hero">
+      <div style="display:flex;align-items:center;gap:13px">
+        <button onclick="location.href='index.html'" style="display:grid;place-items:center;width:36px;height:36px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(255,255,255,.14);color:#fff;font-size:16px;cursor:pointer"><i class="fa-solid fa-arrow-left"></i></button>
+        <div style="flex:1">
+          <div style="font-size:11px;font-weight:500;color:rgba(255,255,255,.65)">Recharge mobile</div>
+          <div id="phone" style="margin-top:2px;color:#fff;font-size:17px;font-weight:700;letter-spacing:-.2px">+91 65678 76543</div>
+        </div>
+        <span id="opPill" style="display:inline-flex;align-items:center;padding:6px 12px;border-radius:999px;background:#e21b22;color:#fff;font-size:10.5px;font-weight:700;letter-spacing:.5px;box-shadow:0 0 0 1px rgba(255,255,255,.35)">JIO</span>
+      </div>
+      <div id="tabs" style="display:flex;flex-wrap:nowrap;gap:7px;margin-top:18px;overflow-x:auto;cursor:grab;touch-action:pan-x;padding-bottom:2px"></div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:9px;margin:14px 18px 0;padding:11px 14px;border-radius:14px;background:#f6f1fe">
+      <span style="font-size:12px">🏷️</span>
+      <span style="font-size:11.5px;font-weight:500;line-height:1.4;color:#6d28d9">Special promotional pricing applied. Discounts up to 97% active.</span>
+    </div>
+
+    <div id="planList" style="padding:14px 18px calc(28px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:14px"></div>
+  </div>
+
+<script>
+var PLANS={
+ 'Popular Plans':[
+  {price:'399',mrp:'2,999',badge:'BEST SELLER',validity:'1 Year',data:'2.5 GB/day',voice:'5G Unlimited',sms:'100/day',subs:['yt','hs','pp']},
+  {price:'299',mrp:'1,199',validity:'6 Months',data:'2 GB/day',voice:'5G Unlimited',sms:'100/day',subs:['yt','pp']},
+  {price:'249',mrp:'749',validity:'3 Month',data:'1.5 GB/day',voice:'5G Unlimited',sms:'100/day',subs:['pp']}
+ ],
+ 'Data Booster':[],
+ 'Unlimited Packs':[
+  {price:'299',mrp:'999',badge:'STREAMING',validity:'56 Days',data:'2 GB/day',voice:'5G Unlimited',sms:'100/day',subs:['hs','pp']}
+ ],
+ 'Validity Packs':[
+  {price:'99',mrp:'499',validity:'24 Days',data:'Total 2 GB',voice:'5G Unlimited',sms:'100 Total',subs:['pp']}
+ ]
+};
+var TABS=['Popular Plans','Data Booster','Unlimited Packs','Validity Packs'];
+var activeTab='Popular Plans';
+var SUB={yt:{m:'\u25B6',bg:'#ff0000',fg:'#fff'},hs:{m:'a',bg:'#1aa3b3',fg:'#fff'},pp:{m:'P',bg:'#6d28d9',fg:'#fff'}};
+var OPCOL={Jio:['#e21b22','#fff'],Airtel:['#fff','#e40000'],Vi:['#e60000','#fff'],BSNL:['#fff','#1a6bb0']};
+
+(function(){
+  var num=localStorage.getItem('recharge_mobile')||'6567876543';
+  if(num.length===10) document.getElementById('phone').textContent='+91 '+num.slice(0,5)+' '+num.slice(5);
+  var op=localStorage.getItem('recharge_operator')||'Jio', c=OPCOL[op]||OPCOL.Jio, p=document.getElementById('opPill');
+  p.textContent=op.toUpperCase(); p.style.background=c[0]; p.style.color=c[1];
+})();
+
+function renderTabs(){
+  document.getElementById('tabs').innerHTML=TABS.map(function(t){
+    var a=t===activeTab;
+    return '<button onclick="setTab(\''+t+'\')" style="flex:0 0 auto;border:none;border-radius:999px;padding:9px 15px;font-family:inherit;font-size:12.5px;font-weight:600;white-space:nowrap;cursor:pointer;color:'+(a?'#4c1d95':'rgba(255,255,255,.8)')+';background:'+(a?'#fff':'rgba(255,255,255,.14)')+';border:1px solid '+(a?'#fff':'rgba(255,255,255,.18)')+';transition:all .15s">'+t+'</button>';
+  }).join('');
+}
+function setTab(t){activeTab=t;renderTabs();renderPlans();}
+function switchPlanCategory(t){ setTab(t); }
+
+function specTile(l,v){
+  return '<div style="padding:11px 12px;border-radius:14px;background:#faf8ff"><div style="font-size:10px;font-weight:600;letter-spacing:.5px;color:#9990b0">'+l+'</div><div style="margin-top:3px;font-size:13px;font-weight:600;color:#1e1233">'+v+'</div></div>';
+}
+function planCard(p,i){
+  var badge=p.badge?'<span style="position:absolute;top:-9px;left:18px;font-size:9.5px;font-weight:700;letter-spacing:.7px;color:#fff;background:linear-gradient(120deg,#f59e0b,#ea580c);padding:5px 11px;border-radius:999px;box-shadow:0 8px 16px -8px rgba(234,88,12,.8)">'+p.badge+'</span>':'';
+  var subs=(p.subs||[]).map(function(k){var s=SUB[k];return '<span style="display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:'+s.bg+';color:'+s.fg+';font-size:11px;font-weight:700">'+s.m+'</span>';}).join('');
+  return '<div style="position:relative;background:#fff;border-radius:22px;padding:18px;box-shadow:0 18px 38px -28px rgba(58,26,110,.45),0 0 0 1px rgba(109,40,217,.06)">'
+   +badge
+   +'<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-top:4px"><div>'
+   +'<div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:30px;font-weight:700;color:#1e1233;letter-spacing:-1.2px;line-height:1">\u20B9'+p.price+'</span><span style="font-size:13.5px;font-weight:500;color:#b4acc7;text-decoration:line-through">\u20B9'+p.mrp+'</span></div>'
+   +'<a href="#" style="display:inline-block;margin-top:7px;font-size:12px;font-weight:600">View Details</a></div>'
+   +'<span style="display:inline-flex;align-items:center;padding:6px 11px;border-radius:999px;background:#ecfdf3;color:#16a34a;font-size:9.5px;font-weight:700;letter-spacing:.4px;white-space:nowrap">TRUE 5G DATA</span></div>'
+   +'<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:16px">'+specTile('VALIDITY',p.validity)+specTile('DATA',p.data)+specTile('VOICE',p.voice)+specTile('SMS',p.sms)+'</div>'
+   +'<div style="display:flex;align-items:center;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid #f3f0f9"><div style="flex:1">'
+   +'<div style="font-size:9.5px;font-weight:600;letter-spacing:.7px;color:#9990b0">SUBSCRIPTIONS</div><div style="display:flex;gap:6px;margin-top:7px">'+subs+'</div></div>'
+   +'<button class="btn-grad" onclick="recharge('+i+')" style="border:none;border-radius:14px;padding:14px 26px;font-family:inherit;font-weight:600;font-size:13.5px;color:#fff;cursor:pointer">Recharge</button></div></div>';
+}
+function emptyState(){
+  return '<div style="background:#fff;border-radius:22px;padding:56px 28px;text-align:center;box-shadow:0 16px 36px -26px rgba(58,26,110,.4),0 0 0 1px rgba(109,40,217,.06)">'
+   +'<div style="width:48px;height:48px;margin:0 auto;border-radius:16px;background:#f4f0fe;display:grid;place-items:center;color:#a89bc4;font-size:18px"><i class="fa-solid fa-ban"></i></div>'
+   +'<div style="margin-top:16px;font-size:14px;font-weight:700;color:#1e1233;letter-spacing:.4px">NOT APPLICABLE</div>'
+   +'<div style="margin:8px auto 0;max-width:250px;font-size:12.5px;line-height:1.55;color:#8b83a3">This data booster section is currently not offered or active for your service node segment.</div></div>';
+}
+function renderPlans(){
+  var l=PLANS[activeTab]||[];
+  document.getElementById('planList').innerHTML = l.length ? l.map(planCard).join('') : emptyState();
+}
+
+function recharge(i){
+  var p=(PLANS[activeTab]||[])[i]; if(!p) return;
+  localStorage.setItem('recharge_amount',p.price);
+  localStorage.setItem('recharge_plan_tab',activeTab);
+  localStorage.setItem('recharge_plan_validity',p.validity);
+  localStorage.setItem('recharge_plan_data',p.data);
+  window.location.href='payment.html';
+}
+function selectPlan(amount){ localStorage.setItem('recharge_amount',amount); window.location.href='payment.html'; }
+
+(function(){
+  var el=document.getElementById('tabs'),down=false,moved=false,sx=0,sl=0;
+  el.addEventListener('pointerdown',function(e){down=true;moved=false;sx=e.clientX;sl=el.scrollLeft;});
+  el.addEventListener('pointermove',function(e){if(!down)return;var dx=e.clientX-sx;if(Math.abs(dx)>4)moved=true;el.scrollLeft=sl-dx;});
+  el.addEventListener('pointerup',function(){down=false;});
+  el.addEventListener('pointerleave',function(){down=false;});
+  el.addEventListener('click',function(e){if(moved){e.preventDefault();e.stopPropagation();}},true);
+})();
+
+renderTabs(); renderPlans();
+</script>
+</body>
+</html>
